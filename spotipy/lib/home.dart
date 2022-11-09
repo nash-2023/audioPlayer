@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 
 import 'package:flutter/material.dart';
@@ -5,12 +6,26 @@ import 'package:spotipy/app_colors.dart' as app_Colors;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List? popularBook;
+  @override
+  ReadData() {
+    DefaultAssetBundle.of(context).loadString("json/popularBooks").then((s) {
+      setState(() {
+        popularBook = json.decode(s);
+      });
+    });
+  }
+
+  void initState() {
+    ReadData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,8 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               Container(
-                height: 180,
-                color: Colors.amber,
+                height: 200,
+                // color: Colors.amber,
                 child: Stack(
                   children: [
                     Positioned(
@@ -51,14 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       right: 0,
                       bottom: 0,
                       child: Container(
-                        height: 180,
+                        // height: 180,
                         child: PageView.builder(
                           scrollDirection: Axis.vertical,
                           controller: PageController(viewportFraction: 1.0),
                           itemCount: 5,
                           itemBuilder: ((context, index) {
                             return Container(
-                              height: 180,
+                              // height: 180,
+                              // width: MediaQuery.of(context).size.width,
+
                               margin: EdgeInsets.symmetric(vertical: 10.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
